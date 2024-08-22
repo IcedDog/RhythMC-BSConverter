@@ -9,7 +9,8 @@ export class Frame {
         this.notes = [];
     }
 
-    addNote(note: Note) {
+    addNote(note: Note): Frame {
         this.notes.push(note);
+        return this;
     }
 }

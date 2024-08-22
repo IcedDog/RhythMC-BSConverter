@@ -2,11 +2,12 @@ import { NOTETYPE, CUT } from "https://deno.land/x/remapper@3.1.2/src/constants.
 import { BPMChange } from "https://deno.land/x/remapper@3.1.2/src/event.ts";
 import { Difficulty } from "https://deno.land/x/remapper@3.1.2/src/mod.ts";
 import { info } from "https://deno.land/x/remapper@3.1.2/src/beatmap.ts";
+import { NOTE, EFFECT, EFFECT_ID } from './rhyth/rhythType.ts';
 import { Beat, BPMEntry } from "./rhyth/beats.ts";
 import { Beatmap } from "./rhyth/rhythBeatmap.ts";
+import { Effect } from "./rhyth/rhythEffect.ts";
 import { Note } from "./rhyth/rhythNote.ts";
 import { Meta } from './rhyth/rhythMeta.ts';
-import { NOTE } from './rhyth/rhythType.ts';
 
 const map = new Difficulty("ExpertPlusStandard");
 
@@ -23,9 +24,9 @@ const meta = new Meta(
     info.name,
     info.authorName,
     info.mapper,
-    1.0,
+    15.3,
     Math.round(info.songOffset * 20),
-    1.0,
+    1.3,
     info.subName,
     Math.round((info.previewDuration + info.previewStart) * 20)
 )
@@ -40,14 +41,14 @@ map.notes.forEach((note) => {
     else if (note.type === NOTETYPE.BLUE) noteType = NOTE.RIGHT_CLICK;
     beatmap.addNote(
         beat.toTick(note.time),
-        new Note(noteType, [note.x - 1, note.y - 1])
+        new Note(noteType, [note.x - 1, note.y])
     );
 })
 
 map.bombs.forEach((bomb) => {
     beatmap.addNote(
         beat.toTick(bomb.time),
-        new Note(NOTE.DO_NOT_CLICK, [bomb.x - 1, bomb.y - 1])
+        new Note(NOTE.DO_NOT_CLICK, [bomb.x - 1, bomb.y])
     );
 })
 
@@ -56,6 +57,23 @@ map.walls.forEach((wall) => {
     newNote.setHold(wall.x - 1, beat.toTick(wall.duration))
     beatmap.addNote(beat.toTick(wall.time), newNote);
 })
+
+beatmap.addEffect(
+    new Effect(EFFECT.TIME, beat.toTick(0)).setTime(167),
+    new Effect(EFFECT.TIME, beat.toTick(93.5)).setTime(6000),
+    new Effect(EFFECT.SPEED, beat.toTick(93.5)).setSpeed(1.5)
+);
+for (let i = beat.toTick(101); i < beat.toTick(133); i += 1) {
+    const startTime = 6000;
+    const endTime = 13800;
+    const currentTime = (endTime - startTime) * (i - beat.toTick(101)) / (beat.toTick(133) - beat.toTick(101)) + startTime;
+    beatmap.addEffect(new Effect(EFFECT.TIME, i).setTime(Math.round(currentTime)));
+}
+beatmap.addEffect(
+    new Effect(EFFECT.TIME, beat.toTick(133)).setTime(13800),
+    new Effect(EFFECT.EFFECT, beat.toTick(133)).setEffectId(EFFECT_ID.SPEED).setEndTick(beat.toTick(192.5)),
+    new Effect(EFFECT.TIME, beat.toTick(192.5)).setTime(18000)
+);
 
 // Write to file
 beatmap.cleanup();

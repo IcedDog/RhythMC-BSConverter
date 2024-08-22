@@ -10,8 +10,9 @@ export class Note {
         this.pos = pos;
     }
 
-    setHold(pos: number, length: number) {
+    setHold(pos: number, length: number): Note {
         this.pos = pos;
         this.length = length;
+        return this;
     }
 }

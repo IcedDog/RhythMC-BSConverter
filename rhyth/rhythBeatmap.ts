@@ -14,7 +14,7 @@ export class Beatmap {
         this.effects = [];
     }
 
-    addNote(frame: number, note: Note) {
+    addNote(frame: number, note: Note): void {
         const result = this.frames.find(f => f["judge-tick"] === frame);
         if (result) {
             result.addNote(note);
@@ -26,7 +26,11 @@ export class Beatmap {
         }
     }
 
-    cleanup() {
+    addEffect(...effect: Effect[]): void {
+        this.effects.push(...effect);
+    }
+
+    cleanup(): void {
         this.frames.sort((a, b) => a["judge-tick"] - b["judge-tick"]);
     }
 }
