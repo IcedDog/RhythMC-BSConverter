@@ -1,6 +1,8 @@
 # RhythMC-BSConverter
 
-ye
+turns your beat saber maps into [rhythmc](https://docs.rhythmc.frkovo.cn/) maps.
+
+don't know beat saber? well at least its chart editors are much better and complete
 
 ## prerequisite
 
