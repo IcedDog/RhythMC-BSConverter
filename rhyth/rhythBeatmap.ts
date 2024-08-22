@@ -9,16 +9,7 @@ export class Beatmap {
     effects: Effect[];
 
     constructor(meta: Meta) {
-        this.meta = {
-            name: "",
-            composer: "",
-            charter: "",
-            level: 0,
-            offset: 0,
-            "flow-speed": 0,
-            uuid: "",
-            length: 0
-        };
+        this.meta = meta
         this.frames = [];
         this.effects = [];
     }
