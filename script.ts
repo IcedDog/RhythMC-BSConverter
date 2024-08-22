@@ -24,9 +24,9 @@ const meta = new Meta(
     info.name,
     info.authorName,
     info.mapper,
-    15.3,
+    1.0,
     Math.round(info.songOffset * 20),
-    1.3,
+    1.0,
     info.subName,
     Math.round((info.previewDuration + info.previewStart) * 20)
 )
@@ -58,22 +58,13 @@ map.walls.forEach((wall) => {
     beatmap.addNote(beat.toTick(wall.time), newNote);
 })
 
-beatmap.addEffect(
-    new Effect(EFFECT.TIME, beat.toTick(0)).setTime(167),
-    new Effect(EFFECT.TIME, beat.toTick(93.5)).setTime(6000),
-    new Effect(EFFECT.SPEED, beat.toTick(93.5)).setSpeed(1.5)
-);
-for (let i = beat.toTick(101); i < beat.toTick(133); i += 1) {
-    const startTime = 6000;
-    const endTime = 13800;
-    const currentTime = (endTime - startTime) * (i - beat.toTick(101)) / (beat.toTick(133) - beat.toTick(101)) + startTime;
-    beatmap.addEffect(new Effect(EFFECT.TIME, i).setTime(Math.round(currentTime)));
-}
-beatmap.addEffect(
-    new Effect(EFFECT.TIME, beat.toTick(133)).setTime(13800),
-    new Effect(EFFECT.EFFECT, beat.toTick(133)).setEffectId(EFFECT_ID.SPEED).setEndTick(beat.toTick(192.5)),
-    new Effect(EFFECT.TIME, beat.toTick(192.5)).setTime(18000)
-);
+// Add your effects here
+// For example:
+//     beatmap.addEffect(new Effect(EFFECT.SPEED, beat.toTick(93.5)).setSpeed(1.5));
+//     beatmap.addEffect(
+//         new Effect(EFFECT.TIME, beat.toTick(0)).setTime(167),
+//         new Effect(EFFECT.TIME, beat.toTick(93.5)).setTime(6000)
+//     );
 
 // Write to file
 beatmap.cleanup();
