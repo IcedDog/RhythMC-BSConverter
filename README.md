@@ -23,3 +23,5 @@ then use terminal to run `python -u pack.py` to run code
 the output files are `output.json` and `all-parts.zip`
 
 remember to modify the meta data in the json file
+
+run `deno run --no-check --allow-all script.ts` if you only want json file
