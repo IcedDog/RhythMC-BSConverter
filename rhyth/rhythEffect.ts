@@ -7,6 +7,7 @@ export class Effect {
     contents?: string[];
     speed?: number;
     "effect-id"?: string;
+    amplifier?: number;
     "hologram-loc"?: number[];
     "hologram-contents"?: string[];
 
@@ -54,6 +55,11 @@ export class Effect {
 
     setEffectId(id: string): Effect {
         this["effect-id"] = id;
+        return this;
+    }
+
+    setAmplifier(amplifier: number): Effect {
+        this.amplifier = amplifier;
         return this;
     }
 }
